@@ -1,5 +1,6 @@
 package com.exemplospring.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -19,6 +20,9 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
+    /*Como a associação é de mão dupla(Order define a FK e User tambem) e necessario usar a anotação @JsonIgnore em um dos lados para não
+    * Ter um loop de gets ja que Order tem um obj de User e User tem uma lista de Orders (Lazy loading)*/
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> list = new ArrayList<>();
 
