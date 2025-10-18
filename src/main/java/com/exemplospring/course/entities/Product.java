@@ -19,7 +19,11 @@ public class Product implements Serializable {
     private Double price;
     private String imgUrl;
 
-    @Transient
+    /*@JoinTable: define o nome da tabela de FKs que vai relacionar a tabela1 e a tabela2, o nome da FK da tabela1 e o nome da FK da tabela2.
+     * joinColumns e @JoinColumn: definem o nome da FK.
+     * inverseJoinColumns: define o nome da FK da tabela2.*/
+    @ManyToMany
+    @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     Set<Category> categories = new HashSet<>();
 
     public Product() {}
