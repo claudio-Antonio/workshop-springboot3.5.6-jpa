@@ -62,6 +62,11 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    //Para o resultado de um metodo aparecer no json eh PRECISO que seu nome inicie com get
+    public Double getSubTotal() {
+        return quantity * price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

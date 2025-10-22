@@ -90,6 +90,14 @@ public class Order implements Serializable {
         return items;
     }
 
+    public Double getTotal() {
+        double sum = 0.0;
+        for(OrderItem item : items) {
+            sum += item.getSubTotal();
+        }
+        return sum;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -100,14 +108,5 @@ public class Order implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", moment=" + moment +
-                ", client=" + client +
-                '}';
     }
 }
