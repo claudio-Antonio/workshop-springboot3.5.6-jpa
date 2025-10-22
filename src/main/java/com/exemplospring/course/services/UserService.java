@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service // faz com que a classe seja um componente especifico da camda de serviço e possa ser injetada com Autowired
+@Service // faz com que a classe seja um componente especifico da camada de serviço e possa ser injetada com Autowired
 public class UserService {
 
     @Autowired
@@ -22,5 +22,9 @@ public class UserService {
         // Optional e uma classe que e um container que representa um valor que pode ou nao estar presente, findById retorna um valor Optional
         Optional<User> obj = repository.findById(id);
         return obj.get(); // metodo que retorna um obj do tipo User
+    }
+
+    public User insert(User user) {
+        return repository.save(user);
     }
 }
