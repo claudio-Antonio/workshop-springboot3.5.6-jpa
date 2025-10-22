@@ -46,4 +46,11 @@ public class UserResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(u.getId()).toUri();
         return ResponseEntity.created(uri).body(u);
     }
+    /*O codigo HTTP que eh retornado apos deleltar um corpo: 204.
+    * noContent(): não retorna nada.*/
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
