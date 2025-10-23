@@ -2,6 +2,7 @@ package com.exemplospring.course.services;
 
 import com.exemplospring.course.entities.User;
 import com.exemplospring.course.repositories.UserRepository;
+import com.exemplospring.course.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class UserService {
     public User findById(Long id) {
         // Optional e uma classe que e um container que representa um valor que pode ou nao estar presente, findById retorna um valor Optional
         Optional<User> obj = repository.findById(id);
-        return obj.get(); // metodo que retorna um obj do tipo User
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User user) {
@@ -32,6 +33,7 @@ public class UserService {
         repository.deleteById(id);
     }
 
+    /*getReferenceById: monitora o obj entity com o novo id para posteriormente trabalhar com ele e depois fazer uma operação no BD.*/
     public User update(Long id, User obj) {
             User entity = repository.getReferenceById(id);
             updateData(entity, obj);
