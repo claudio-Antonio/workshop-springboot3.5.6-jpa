@@ -2,8 +2,12 @@ package com.exemplospring.course.services;
 
 import com.exemplospring.course.entities.User;
 import com.exemplospring.course.repositories.UserRepository;
+import com.exemplospring.course.services.exceptions.DatabaseException;
 import com.exemplospring.course.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,8 +33,14 @@ public class UserService {
         return repository.save(user);
     }
 
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public void delete(Long id) { // DataIntegrityViolationException
+        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+        try {
+            repository.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     /*getReferenceById: monitora o obj entity com o novo id para posteriormente trabalhar com ele e depois fazer uma operação no BD.*/
