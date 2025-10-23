@@ -14,10 +14,10 @@ import java.util.Arrays;
 /*
 * A classe TestConfig serve para popular o banco h2 com alguns dados, apenas para teste
 * @Configuration: serve para falar pro spring que esta e uma classe de configiração
-* @Profile("nome do profile"): serve para o spring entender que e uma configuração especifica para o perfil de nome "test"
+* @Profile("nome do profile"): serve para o spring entender que e uma configuração especifica para o perfil de nome "test" ou "dev"
 */
 @Configuration
-@Profile("test")
+@Profile("dev")
 public class TestConfig implements CommandLineRunner {
 
     @Autowired // faz a injeção de dependencia automaticamente
