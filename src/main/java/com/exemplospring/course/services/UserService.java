@@ -4,6 +4,7 @@ import com.exemplospring.course.entities.User;
 import com.exemplospring.course.repositories.UserRepository;
 import com.exemplospring.course.services.exceptions.DatabaseException;
 import com.exemplospring.course.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -45,9 +46,14 @@ public class UserService {
 
     /*getReferenceById: monitora o obj entity com o novo id para posteriormente trabalhar com ele e depois fazer uma operação no BD.*/
     public User update(Long id, User obj) {
+        try {
             User entity = repository.getReferenceById(id);
             updateData(entity, obj);
             return repository.save(entity);
+        }
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateData(User entity, User obj) {
